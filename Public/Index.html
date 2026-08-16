@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Betawin — Login</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      min-height:100vh;
+      font-family:Arial,sans-serif;
+      background:linear-gradient(135deg,#08001f,#16004d,#003b6f);
+      color:#fff;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+    }
+    .box{
+      width:100%;
+      max-width:420px;
+      background:rgba(255,255,255,.09);
+      border:1px solid rgba(255,255,255,.18);
+      backdrop-filter:blur(18px);
+      border-radius:25px;
+      padding:32px 25px;
+      box-shadow:0 20px 60px rgba(0,0,0,.4);
+    }
+    .logo{
+      text-align:center;
+      font-size:34px;
+      font-weight:900;
+      color:#00eaff;
+      margin-bottom:8px;
+    }
+    .logo span{color:#ff2bd6}
+    .subtitle{
+      text-align:center;
+      color:#bbb;
+      margin-bottom:25px;
+    }
+    .tabs{
+      display:flex;
+      gap:8px;
+      background:rgba(0,0,0,.25);
+      padding:5px;
+      border-radius:14px;
+      margin-bottom:22px;
+    }
+    .tabs button{
+      flex:1;
+      border:0;
+      padding:12px;
+      border-radius:10px;
+      background:transparent;
+      color:#aaa;
+      cursor:pointer;
+      font-weight:bold;
+    }
+    .tabs button.active{
+      background:linear-gradient(90deg,#ff20c8,#007bff);
+      color:white;
+    }
+    form{display:none}
+    form.active{display:block}
+    .input{
+      margin-bottom:15px;
+    }
+    label{
+      display:block;
+      margin-bottom:7px;
+      font-size:13px;
+      color:#ccc;
+    }
+    input{
+      width:100%;
+      padding:14px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.15);
+      background:rgba(0,0,0,.3);
+      color:white;
+      outline:none;
+    }
+    input:focus{
+      border-color:#00d9ff;
+      box-shadow:0 0 12px rgba(0,217,255,.2);
+    }
+    .main-btn{
+      width:100%;
+      padding:15px;
+      border:0;
+      border-radius:13px;
+      background:linear-gradient(90deg,#ff16c8,#006eff);
+      color:white;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      margin-top:5px;
+    }
+    .main-btn:hover{opacity:.9}
+    .forgot{
+      display:block;
+      text-align:right;
+      margin:12px 0;
+      color:#00d9ff;
+      cursor:pointer;
+      font-size:13px;
+    }
+    .message{
+      text-align:center;
+      margin-top:15px;
+      font-size:13px;
+      min-height:18px;
+    }
+    .switch{
+      text-align:center;
+      margin-top:20px;
+      color:#aaa;
+      font-size:13px;
+    }
+    .switch span{
+      color:#00d9ff;
+      cursor:pointer;
+      font-weight:bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="logo">Beta<span>win</span></div>
+    <div class="subtitle">Welcome back</div>
+
+    <div class="tabs">
+      <button id="loginTab" class="active" onclick="showForm('login')">Login</button>
+      <button id="registerTab" onclick="showForm('register')">Register</button>
+    </div>
+
+    <!-- LOGIN -->
+    <form id="loginForm" class="active">
+      <div class="input">
+        <label>Email or Phone</label>
+        <input id="loginIdentity" type="text" required>
+      </div>
+
+      <div class="input">
+        <label>Password</label>
+        <input id="loginPassword" type="password" required>
+      </div>
+
+      <span class="forgot" onclick="showForm('forgot')">
+        Forgot password?
+      </span>
+
+      <button class="main-btn" type="submit">LOGIN</button>
+      <div id="loginMessage" class="message"></div>
+
+      <div class="switch">
+        Don't have an account?
+        <span onclick="showForm('register')">Register</span>
+      </div>
+    </form>
+
+    <!-- REGISTER -->
+    <form id="registerForm">
+      <div class="input">
+        <label>Full Name</label>
+        <input id="name" type="text" required>
+      </div>
+
+      <div class="input">
+        <label>Email</label>
+        <input id="email" type="email" required>
+      </div>
+
+      <div class="input">
+        <label>Phone</label>
+        <input id="phone" type="tel" required>
+      </div>
+
+      <div class="input">
+        <label>Password</label>
+        <input id="registerPassword" type="password" required>
+      </div>
+
+      <div class="input">
+        <label>Confirm Password</label>
+        <input id="confirmPassword" type="password" required>
+      </div>
+
+      <button class="main-btn" type="submit">CREATE ACCOUNT</button>
+      <div id="registerMessage" class="message"></div>
+
+      <div class="switch">
+        Already have an account?
+        <span onclick="showForm('login')">Login</span>
+      </div>
+    </form>
+
+    <!-- FORGOT PASSWORD -->
+    <form id="forgotForm">
+      <div class="input">
+        <label>Email or Phone</label>
+        <input id="forgotIdentity" type="text" required>
+      </div>
+
+      <button class="main-btn" type="submit">RESET PASSWORD</button>
+      <div id="forgotMessage" class="message"></div>
+
+      <div class="switch">
+        Remember your password?
+        <span onclick="showForm('login')">Back to Login</span>
+      </div>
+    </form>
+  </div>
+
+<script>
+const API_URL = "/api";
+
+function showForm(type){
+  document.querySelectorAll("form").forEach(f => f.classList.remove("active"));
+
+  document.getElementById("loginTab").classList.remove("active");
+  document.getElementById("registerTab").classList.remove("active");
+
+  if(type === "login"){
+    document.getElementById("loginForm").classList.add("active");
+    document.getElementById("loginTab").classList.add("active");
+  }
+
+  if(type === "register"){
+    document.getElementById("registerForm").classList.add("active");
+    document.getElementById("registerTab").classList.add("active");
+  }
+
+  if(type === "forgot"){
+    document.getElementById("forgotForm").classList.add("active");
+  }
+}
+
+async function sendRequest(endpoint, data){
+  const response = await fetch(`${API_URL}${endpoint}`, {
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify(data)
+  });
+
+  const result = await response.json().catch(() => ({
+    message:"Invalid server response"
+  }));
+
+  if(!response.ok){
+    throw new Error(result.message || "Request failed");
+  }
+
+  return result;
+}
+
+document.getElementById("loginForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+
+  const message = document.getElementById("loginMessage");
+  message.textContent = "Logging in...";
+
+  try{
+    const result = await sendRequest("/auth/login",{
+      identity:document.getElementById("loginIdentity").value,
+      password:document.getElementById("loginPassword").value
+    });
+
+    if(result.token){
+      localStorage.setItem("token",result.token);
+    }
+
+    message.textContent = result.message || "Login successful";
+
+    setTimeout(()=>{
+      window.location.href = "/dashboard.html";
+    },700);
+
+  }catch(error){
+    message.textContent = error.message;
+  }
+});
+
+document.getElementById("registerForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+
+  const password = document.getElementById("registerPassword").value;
+  const confirm = document.getElementById("confirmPassword").value;
+  const message = document.getElementById("registerMessage");
+
+  if(password !== confirm){
+    message.textContent = "Passwords do not match";
+    return;
+  }
+
+  message.textContent = "Creating account...";
+
+  try{
+    const result = await sendRequest("/auth/register",{
+      name:document.getElementById("name").value,
+      email:document.getElementById("email").value,
+      phone:document.getElementById("phone").value,
+      password
+    });
+
+    message.textContent = result.message || "Account created successfully";
+
+    setTimeout(()=>{
+      showForm("login");
+    },900);
+
+  }catch(error){
+    message.textContent = error.message;
+  }
+});
+
+document.getElementById("forgotForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+
+  const message = document.getElementById("forgotMessage");
+  message.textContent = "Processing...";
+
+  try{
+    const result = await sendRequest("/auth/forgot-password",{
+      identity:document.getElementById("forgotIdentity").value
+    });
+
+    message.textContent =
+      result.message || "Password reset request sent";
+
+  }catch(error){
+    message.textContent = error.message;
+  }
+});
+</script>
+</body>
+</html>
