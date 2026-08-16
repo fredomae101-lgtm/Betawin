@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Betawin | Games</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  min-height:100vh;
+  color:#fff;
+  background:
+    radial-gradient(circle at top right,#073c78,transparent 35%),
+    radial-gradient(circle at bottom left,#43004f,transparent 35%),
+    #070014;
+}
+
+header{
+  height:68px;
+  padding:0 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#090120;
+  border-bottom:1px solid #25154b;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.back{
+  font-size:28px;
+  cursor:pointer;
+  width:42px;
+}
+
+.logo{
+  font-size:27px;
+  font-weight:900;
+  color:#00eaff;
+}
+
+.logo span{
+  color:#ff22cf;
+}
+
+.profile{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#ff20c8,#006eff);
+  font-weight:bold;
+}
+
+main{
+  max-width:1100px;
+  margin:auto;
+  padding:22px 15px 40px;
+}
+
+.heading{
+  margin-bottom:20px;
+}
+
+.heading h1{
+  font-size:28px;
+  margin-bottom:7px;
+}
+
+.heading p{
+  color:#999;
+}
+
+.search{
+  width:100%;
+  padding:14px 16px;
+  margin-bottom:18px;
+  border:1px solid #2b1950;
+  border-radius:13px;
+  outline:none;
+  background:#10052c;
+  color:#fff;
+}
+
+.search:focus{
+  border-color:#00eaff;
+}
+
+.filters{
+  display:flex;
+  gap:9px;
+  overflow-x:auto;
+  padding-bottom:5px;
+  margin-bottom:24px;
+}
+
+.filters button{
+  flex:none;
+  padding:11px 17px;
+  border:1px solid #302052;
+  border-radius:20px;
+  background:#10052c;
+  color:#aaa;
+  cursor:pointer;
+}
+
+.filters button.active,
+.filters button:hover{
+  background:linear-gradient(90deg,#ff20c8,#006eff);
+  color:#fff;
+  border-color:transparent;
+}
+
+.section-title{
+  margin:23px 0 13px;
+  font-size:20px;
+}
+
+.games{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:13px;
+}
+
+.game{
+  padding:18px 13px;
+  border-radius:17px;
+  background:#10052c;
+  border:1px solid #27164b;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.game:hover{
+  transform:translateY(-4px);
+  border-color:#00eaff;
+}
+
+.game-icon{
+  height:100px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:48px;
+  margin-bottom:12px;
+  background:linear-gradient(135deg,#261050,#071e52);
+}
+
+.game h3{
+  font-size:16px;
+  margin-bottom:5px;
+}
+
+.game p{
+  color:#888;
+  font-size:12px;
+}
+
+.game button{
+  width:100%;
+  margin-top:13px;
+  padding:11px;
+  border:0;
+  border-radius:10px;
+  background:linear-gradient(90deg,#ff20c8,#006eff);
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.empty{
+  grid-column:1/-1;
+  text-align:center;
+  padding:30px;
+  color:#888;
+}
+
+footer{
+  text-align:center;
+  color:#555;
+  padding:20px;
+  font-size:12px;
+}
+
+@media(min-width:650px){
+  .games{
+    grid-template-columns:repeat(4,1fr);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="back" onclick="goBack()">←</div>
+
+  <div class="logo">
+    Beta<span>win</span>
+  </div>
+
+  <div class="profile" id="profile">U</div>
+
+</header>
+
+<main>
+
+  <section class="heading">
+    <h1>Games 🎮</h1>
+    <p>Explore and play available games.</p>
+  </section>
+
+  <input
+    class="search"
+    id="search"
+    type="search"
+    placeholder="Search games..."
+    oninput="filterGames()"
+  >
+
+  <div class="filters">
+
+    <button class="active" onclick="setCategory('all',this)">
+      All
+    </button>
+
+    <button onclick="setCategory('arcade',this)">
+      🕹️ Arcade
+    </button>
+
+    <button onclick="setCategory('puzzle',this)">
+      🧩 Puzzle
+    </button>
+
+    <button onclick="setCategory('sports',this)">
+      ⚽ Sports
+    </button>
+
+    <button onclick="setCategory('strategy',this)">
+      ♟️ Strategy
+    </button>
+
+  </div>
+
+  <h2 class="section-title">Available Games</h2>
+
+  <section class="games" id="games">
+
+    <div class="game"
+         data-name="Speed Racer"
+         data-category="arcade">
+
+      <div class="game-icon">🏎️</div>
+
+      <h3>Speed Racer</h3>
+      <p>Arcade racing</p>
+
+      <button onclick="playGame('Speed Racer')">
+        PLAY
+      </button>
+
+    </div>
+
+    <div class="game"
+         data-name="Block Puzzle"
+         data-category="puzzle">
+
+      <div class="game-icon">🧩</div>
+
+      <h3>Block Puzzle</h3>
+      <p>Classic puzzle</p>
+
+      <button onclick="playGame('Block Puzzle')">
+        PLAY
+      </button>
+
+    </div>
+
+    <div class="game"
+         data-name="Football Challenge"
+         data-category="sports">
+
+      <div class="game-icon">⚽</div>
+
+      <h3>Football Challenge</h3>
+      <p>Sports challenge</p>
+
+      <button onclick="playGame('Football Challenge')">
+        PLAY
+      </button>
+
+    </div>
+
+    <div class="game"
+         data-name="Basketball Challenge"
+         data-category="sports">
+
+      <div class="game-icon">🏀</div>
+
+      <h3>Basketball Challenge</h3>
+      <p>Sports challenge</p>
+
+      <button onclick="playGame('Basketball Challenge')">
+        PLAY
+      </button>
+
+    </div>
+
+    <div class="game"
+         data-name="Memory Match"
+         data-category="puzzle">
+
+      <div class="game-icon">🧠</div>
+
+      <h3>Memory Match</h3>
+      <p>Memory puzzle</p>
+
+      <button onclick="playGame('Memory Match')">
+        PLAY
+      </button>
+
+    </div>
+
+    <div class="game"
+         data-name="Chess Arena"
+         data-category="strategy">
+
+      <div class="game-icon">♟️</div>
+
+      <h3>Chess Arena</h3>
+      <p>Strategy game</p>
+
+      <button onclick="playGame('Chess Arena')">
+        PLAY
+      </button>
+
+    </div>
+
+    <div class="game"
+         data-name="Space Runner"
+         data-category="arcade">
+
+      <div class="game-icon">🚀</div>
+
+      <h3>Space Runner</h3>
+      <p>Arcade adventure</p>
+
+      <button onclick="playGame('Space Runner')">
+        PLAY
+      </button>
+
+    </div>
+
+    <div class="game"
+         data-name="Tennis Challenge"
+         data-category="sports">
+
+      <div class="game-icon">🎾</div>
+
+      <h3>Tennis Challenge</h3>
+      <p>Sports challenge</p>
+
+      <button onclick="playGame('Tennis Challenge')">
+        PLAY
+      </button>
+
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Betawin
+</footer>
+
+<script>
+
+const token = localStorage.getItem("token");
+
+if(!token){
+  window.location.href="/";
+}
+
+
+/* BACK */
+function goBack(){
+  window.location.href="/dashboard.html";
+}
+
+
+/* USER */
+try{
+
+  const user =
+    JSON.parse(localStorage.getItem("user"));
+
+  if(user && user.name){
+
+    document.getElementById("profile")
+      .textContent =
+      user.name.charAt(0).toUpperCase();
+
+  }
+
+}catch(error){
+  console.log("User data unavailable");
+}
+
+
+/* CATEGORY */
+let currentCategory = "all";
+
+function setCategory(category,button){
+
+  currentCategory = category;
+
+  document
+    .querySelectorAll(".filters button")
+    .forEach(btn =>
+      btn.classList.remove("active")
+    );
+
+  button.classList.add("active");
+
+  filterGames();
+}
+
+
+/* SEARCH + FILTER */
+function filterGames(){
+
+  const search =
+    document.getElementById("search")
+    .value
+    .toLowerCase();
+
+  const games =
+    document.querySelectorAll(".game");
+
+  let visible = 0;
+
+  games.forEach(game => {
+
+    const name =
+      game.dataset.name.toLowerCase();
+
+    const category =
+      game.dataset.category;
+
+    const matchesSearch =
+      name.includes(search);
+
+    const matchesCategory =
+      currentCategory === "all" ||
+      category === currentCategory;
+
+    if(matchesSearch && matchesCategory){
+
+      game.style.display="block";
+      visible++;
+
+    }else{
+
+      game.style.display="none";
+
+    }
+
+  });
+
+}
+
+
+/* PLAY */
+function playGame(name){
+
+  /*
+    Connect this later to:
+    /api/games/:gameId
+  */
+
+  alert(
+    name +
+    " is ready to play."
+  );
+
+}
+
+</script>
+
+</body>
+  </html>
