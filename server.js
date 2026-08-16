@@ -1292,4 +1292,168 @@ app.use(
 
     if(error.code === 11000){
 
-      ret
+      return res.status(409).json({
+        success: false,
+        message:
+          "A record with this information already exists"
+      });
+
+    }
+
+
+    if(
+      error.name ===
+      "ValidationError"
+    ){
+
+      return res.status(400).json({
+        success: false,
+        message:
+          "Invalid request data"
+      });
+
+    }
+
+
+    res.status(500).json({
+
+      success: false,
+
+      message:
+        process.env.NODE_ENV ===
+        "production"
+          ? "Internal server error"
+          : error.message
+
+    });
+
+  }
+);
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function getOrdinal(number){
+
+  if(
+    number % 100 >= 11 &&
+    number % 100 <= 13
+  ){
+
+    return "th";
+
+  }
+
+  switch(number % 10){
+
+    case 1:
+      return "st";
+
+    case 2:
+      return "nd";
+
+    case 3:
+      return "rd";
+
+    default:
+      return "th";
+
+  }
+
+}
+
+
+/* =========================================================
+   START SERVER
+========================================================= */
+
+const server =
+  app.listen(
+    PORT,
+    () => {
+
+      console.log("");
+      console.log(
+        "================================"
+      );
+      console.log(
+        "      BETAWIN API SERVER"
+      );
+      console.log(
+        "================================"
+      );
+      console.log(
+        `🚀 Port: ${PORT}`
+      );
+      console.log(
+        `🌐 http://localhost:${PORT}`
+      );
+      console.log(
+        "🔐 JWT authentication enabled"
+      );
+      console.log(
+        "🛡️ Security middleware enabled"
+      );
+      console.log(
+        "🎮 Games API enabled"
+      );
+      console.log(
+        "⚽ Sports API enabled"
+      );
+      console.log(
+        "🏆 Tournaments API enabled"
+      );
+      console.log(
+        "📊 Results API enabled"
+      );
+      console.log(
+        "🔴 Live scores API enabled"
+      );
+      console.log(
+        "🥇 Leaderboard API enabled"
+      );
+      console.log(
+        "================================"
+      );
+      console.log("");
+
+    }
+  );
+
+
+/* =========================================================
+   GRACEFUL SHUTDOWN
+========================================================= */
+
+async function shutdown(signal){
+
+  console.log(
+    `\n${signal} received. Shutting down...`
+  );
+
+  server.close(async () => {
+
+    await mongoose.connection.close();
+
+    console.log(
+      "✅ Server closed"
+    );
+
+    process.exit(0);
+
+  });
+
+}
+
+
+process.on(
+  "SIGTERM",
+  () => shutdown("SIGTERM")
+);
+
+process.on(
+  "SIGINT",
+  () => shutdown("SIGINT")
+);
