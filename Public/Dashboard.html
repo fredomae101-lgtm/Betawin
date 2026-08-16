@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Betawin — Home</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif
+}
+
+body{
+  min-height:100vh;
+  color:#fff;
+  background:
+    radial-gradient(circle at 90% 0%,#123d78 0,transparent 35%),
+    radial-gradient(circle at 0% 30%,#41045c 0,transparent 35%),
+    #070014;
+}
+
+header{
+  height:68px;
+  padding:0 17px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(8,1,28,.94);
+  border-bottom:1px solid rgba(255,255,255,.1);
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.menu{
+  width:42px;
+  font-size:29px;
+  cursor:pointer;
+}
+
+.logo{
+  font-size:27px;
+  font-weight:900;
+  color:#00eaff;
+}
+
+.logo span{
+  color:#ff24d4;
+}
+
+.profile{
+  width:39px;
+  height:39px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ff19c8,#006eff);
+  font-weight:bold;
+}
+
+main{
+  max-width:1150px;
+  margin:auto;
+  padding:22px 16px 45px;
+}
+
+.welcome{
+  margin-bottom:20px;
+}
+
+.welcome h1{
+  font-size:27px;
+  margin-bottom:7px;
+}
+
+.welcome p{
+  color:#999;
+}
+
+.hero{
+  padding:27px 21px;
+  border-radius:22px;
+  margin-bottom:25px;
+  background:
+    linear-gradient(135deg,
+    rgba(255,22,200,.32),
+    rgba(0,110,255,.3));
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 15px 45px rgba(0,0,0,.25);
+}
+
+.hero h2{
+  font-size:26px;
+  margin-bottom:9px;
+}
+
+.hero p{
+  color:#d0d0d0;
+  line-height:1.5;
+}
+
+.title{
+  font-size:20px;
+  margin:25px 0 14px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.card{
+  padding:20px 12px;
+  text-align:center;
+  border-radius:17px;
+  background:rgba(255,255,255,.065);
+  border:1px solid rgba(255,255,255,.1);
+  text-decoration:none;
+  color:#fff;
+  transition:.2s;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+  border-color:#00eaff;
+}
+
+.card-icon{
+  font-size:31px;
+  margin-bottom:9px;
+}
+
+.live-list{
+  display:grid;
+  gap:11px;
+}
+
+.match{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:17px;
+  border-radius:15px;
+  background:rgba(255,255,255,.065);
+  border:1px solid rgba(255,255,255,.09);
+}
+
+.match-type{
+  color:#ff35ae;
+  font-size:11px;
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+.score{
+  color:#00eaff;
+  font-weight:bold;
+}
+
+.notice{
+  margin-top:22px;
+  padding:17px;
+  border-radius:15px;
+  background:rgba(0,234,255,.06);
+  border:1px solid rgba(0,234,255,.15);
+  color:#bbb;
+  font-size:13px;
+  line-height:1.5;
+}
+
+footer{
+  text-align:center;
+  color:#555;
+  padding:20px;
+  font-size:12px;
+}
+
+@media(min-width:650px){
+  .cards{
+    grid-template-columns:repeat(4,1fr);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <!-- HAMBURGER -->
+  <div class="menu" onclick="openHamburg()">
+    ☰
+  </div>
+
+  <div class="logo">
+    Beta<span>win</span>
+  </div>
+
+  <div class="profile" id="profile">
+    U
+  </div>
+
+</header>
+
+
+<main>
+
+  <!-- HOME -->
+  <section class="welcome">
+    <h1>
+      Welcome, <span id="username">User</span> 👋
+    </h1>
+
+    <p>
+      Your Betawin home dashboard.
+    </p>
+  </section>
+
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <h2>Betawin</h2>
+
+    <p>
+      Explore sports, live scores, games,
+      tournaments and competition results.
+    </p>
+
+  </section>
+
+
+  <!-- QUICK FEATURES -->
+  <h2 class="title">Explore</h2>
+
+  <section class="cards">
+
+    <a class="card" href="/pages/sports.html">
+      <div class="card-icon">⚽</div>
+      <strong>Sports</strong>
+    </a>
+
+    <a class="card" href="/pages/live-scores.html">
+      <div class="card-icon">🔴</div>
+      <strong>Live Scores</strong>
+    </a>
+
+    <a class="card" href="/pages/games.html">
+      <div class="card-icon">🎮</div>
+      <strong>Games</strong>
+    </a>
+
+    <a class="card" href="/pages/tournaments.html">
+      <div class="card-icon">🏆</div>
+      <strong>Tournaments</strong>
+    </a>
+
+  </section>
+
+
+  <!-- LIVE EVENTS -->
+  <h2 class="title">Live Events</h2>
+
+  <section class="live-list">
+
+    <div class="match">
+
+      <div>
+        <div class="match-type">● LIVE</div>
+        <strong>Football</strong>
+      </div>
+
+      <div>Team A vs Team B</div>
+
+      <div class="score">
+        1 - 0
+      </div>
+
+    </div>
+
+
+    <div class="match">
+
+      <div>
+        <div class="match-type">● LIVE</div>
+        <strong>Basketball</strong>
+      </div>
+
+      <div>Team C vs Team D</div>
+
+      <div class="score">
+        72 - 68
+      </div>
+
+    </div>
+
+
+    <div class="match">
+
+      <div>
+        <div class="match-type">● LIVE</div>
+        <strong>Tennis</strong>
+      </div>
+
+      <div>Player A vs Player B</div>
+
+      <div class="score">
+        1 - 1
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <div class="notice">
+    Live event information is loaded from the Betawin backend.
+  </div>
+
+</main>
+
+
+<footer>
+  © 2026 Betawin
+</footer>
+
+
+<script>
+
+const token = localStorage.getItem("token");
+
+if(!token){
+  window.location.href="/";
+}
+
+
+/* OPEN HAMBURGER PAGE */
+function openHamburg(){
+
+  window.location.href="/hamburg.html";
+
+}
+
+
+/* LOAD USER */
+try{
+
+  const user =
+    JSON.parse(localStorage.getItem("user"));
+
+  if(user){
+
+    document.getElementById("username")
+      .textContent=user.name || "User";
+
+    if(user.name){
+
+      document.getElementById("profile")
+        .textContent=
+        user.name.charAt(0).toUpperCase();
+
+    }
+
+  }
+
+}catch(error){
+
+  console.log("User data unavailable");
+
+}
+
+</script>
+
+</body>
+  </html>
